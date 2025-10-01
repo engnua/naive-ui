@@ -161,6 +161,10 @@
       ]
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "tag": "engnua"
+  },
   "lint-staged": {
     "*.js": [
       "prettier --write",
