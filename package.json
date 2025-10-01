@@ -1,6 +1,6 @@
 {
-  "name": "naive-ui",
-  "version": "2.43.1",
+  "name": "@engnua/naive-ui",
+  "version": "2.43.1-engnua.1",
   "packageManager": "pnpm@9.5.0",
   "description": "A Vue 3 Component Library. Fairly Complete, Theme Customizable, Uses TypeScript, Fast",
   "author": "07akioni",
@@ -8,7 +8,7 @@
   "homepage": "https://www.naiveui.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tusen-ai/naive-ui"
+    "url": "https://github.com/engnua/naive-ui"
   },
   "keywords": [
     "naive-ui",

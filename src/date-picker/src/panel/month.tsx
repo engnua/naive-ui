@@ -141,7 +141,9 @@ export default defineComponent({
           `${mergedClsPrefix}-date-panel`,
           `${mergedClsPrefix}-date-panel--month`,
           !this.panel && `${mergedClsPrefix}-date-panel--shadow`,
-          this.themeClass
+          this.themeClass,
+          this.shortcuts
+          && `${mergedClsPrefix}-date-panel--shortcuts-${this.shortcutsPosition}`
         ]}
         onFocus={this.handlePanelFocus}
         onKeydown={this.handlePanelKeyDown}
@@ -212,30 +214,36 @@ export default defineComponent({
             <div class={`${mergedClsPrefix}-date-panel-footer`}>{children}</div>
           ) : null
         })}
-        {actions?.length || shortcuts ? (
-          <div class={`${mergedClsPrefix}-date-panel-actions`}>
-            <div class={`${mergedClsPrefix}-date-panel-actions__prefix`}>
-              {shortcuts
-                && Object.keys(shortcuts).map((key) => {
-                  const shortcut = shortcuts[key]
-                  return Array.isArray(shortcut) ? null : (
-                    <NxButton
-                      size="tiny"
-                      onMouseenter={() => {
-                        this.handleSingleShortcutMouseenter(shortcut)
-                      }}
-                      onClick={() => {
-                        this.handleSingleShortcutClick(shortcut)
-                      }}
-                      onMouseleave={() => {
-                        this.handleShortcutMouseleave()
-                      }}
-                    >
-                      {{ default: () => key }}
-                    </NxButton>
-                  )
-                })}
-            </div>
+        {shortcuts ? (
+          <div class={`${mergedClsPrefix}-date-panel-shortcuts`}>
+            {Object.keys(shortcuts).map((key) => {
+              const shortcut = shortcuts[key]
+              return Array.isArray(shortcut) ? null : (
+                <NxButton
+                  size={this.buttonSize ?? 'tiny'}
+                  onMouseenter={() => {
+                    this.handleSingleShortcutMouseenter(shortcut)
+                  }}
+                  onClick={() => {
+                    this.handleSingleShortcutClick(shortcut)
+                  }}
+                  onMouseleave={() => {
+                    this.handleShortcutMouseleave()
+                  }}
+                >
+                  {{ default: () => key }}
+                </NxButton>
+              )
+            })}
+          </div>
+        ) : null}
+        {actions?.length ? (
+          <div
+            class={[
+              `${mergedClsPrefix}-date-panel-actions`,
+              !shortcuts && `${mergedClsPrefix}-date-panel-actions--no-divider`
+            ]}
+          >
             <div class={`${mergedClsPrefix}-date-panel-actions__suffix`}>
               {actions?.includes('clear')
                 ? resolveSlotWithTypedProps(
@@ -248,7 +256,7 @@ export default defineComponent({
                       <NButton
                         theme={mergedTheme.peers.Button}
                         themeOverrides={mergedTheme.peerOverrides.Button}
-                        size="tiny"
+                        size={this.buttonSize ?? 'tiny'}
                         onClick={this.handleClearClick}
                       >
                         {{ default: () => this.locale.clear }}
@@ -267,7 +275,7 @@ export default defineComponent({
                       <NButton
                         theme={mergedTheme.peers.Button}
                         themeOverrides={mergedTheme.peerOverrides.Button}
-                        size="tiny"
+                        size={this.buttonSize ?? 'tiny'}
                         onClick={this.handleNowClick}
                       >
                         {{ default: () => this.locale.now }}
@@ -287,7 +295,7 @@ export default defineComponent({
                       <NButton
                         theme={mergedTheme.peers.Button}
                         themeOverrides={mergedTheme.peerOverrides.Button}
-                        size="tiny"
+                        size={this.buttonSize ?? 'tiny'}
                         type="primary"
                         disabled={this.isDateInvalid}
                         onClick={this.handleConfirmClick}

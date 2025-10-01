@@ -20,7 +20,7 @@ import PanelHeader from './panelHeader'
 import { useDualCalendar, useDualCalendarProps } from './use-dual-calendar'
 
 export default defineComponent({
-  name: 'DateRangePanel',
+  name: 'DateRangeMinimalPanel',
   props: useDualCalendarProps,
   setup(props) {
     if (__DEV__) {
@@ -28,7 +28,7 @@ export default defineComponent({
         if (props.actions?.includes('now')) {
           warnOnce(
             'date-picker',
-            'The `now` action is not supported for n-date-picker of `daterange` type'
+            'The `now` action is not supported for n-date-picker of `daterange-minimal` type'
           )
         }
       })
@@ -52,6 +52,7 @@ export default defineComponent({
         class={[
           `${mergedClsPrefix}-date-panel`,
           `${mergedClsPrefix}-date-panel--daterange`,
+          `${mergedClsPrefix}-date-panel--daterange-minimal`,
           !this.panel && `${mergedClsPrefix}-date-panel--shadow`,
           this.themeClass,
           this.shortcuts
@@ -120,105 +121,6 @@ export default defineComponent({
           <div class={`${mergedClsPrefix}-date-panel__divider`} />
           <div class={`${mergedClsPrefix}-date-panel-dates`}>
             {this.startDateArray.map((dateItem, i) => (
-              <div
-                data-n-date
-                key={i}
-                class={[
-                  `${mergedClsPrefix}-date-panel-date`,
-                  {
-                    [`${mergedClsPrefix}-date-panel-date--excluded`]:
-                      !dateItem.inCurrentMonth,
-                    [`${mergedClsPrefix}-date-panel-date--current`]:
-                      dateItem.isCurrentDate,
-                    [`${mergedClsPrefix}-date-panel-date--selected`]:
-                      dateItem.selected,
-                    [`${mergedClsPrefix}-date-panel-date--covered`]:
-                      dateItem.inSpan,
-                    [`${mergedClsPrefix}-date-panel-date--start`]:
-                      dateItem.startOfSpan,
-                    [`${mergedClsPrefix}-date-panel-date--end`]:
-                      dateItem.endOfSpan,
-                    [`${mergedClsPrefix}-date-panel-date--disabled`]:
-                      this.mergedIsDateDisabled(dateItem.ts)
-                  }
-                ]}
-                onClick={() => {
-                  this.handleDateClick(dateItem)
-                }}
-                onMouseenter={() => {
-                  this.handleDateMouseEnter(dateItem)
-                }}
-              >
-                <div class={`${mergedClsPrefix}-date-panel-date__trigger`} />
-                {dateItem.dateObject.date}
-                {dateItem.isCurrentDate ? (
-                  <div class={`${mergedClsPrefix}-date-panel-date__sup`} />
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class={`${mergedClsPrefix}-date-panel__vertical-divider`} />
-        <div
-          ref="endDatesElRef"
-          class={`${mergedClsPrefix}-date-panel-calendar ${mergedClsPrefix}-date-panel-calendar--end`}
-        >
-          <div class={`${mergedClsPrefix}-date-panel-month`}>
-            <div
-              class={`${mergedClsPrefix}-date-panel-month__fast-prev`}
-              onClick={this.endCalendarPrevYear}
-            >
-              {resolveSlot(datePickerSlots['prev-year'], () => [
-                <FastBackwardIcon />
-              ])}
-            </div>
-            <div
-              class={`${mergedClsPrefix}-date-panel-month__prev`}
-              onClick={this.endCalendarPrevMonth}
-            >
-              {resolveSlot(datePickerSlots['prev-month'], () => [
-                <BackwardIcon />
-              ])}
-            </div>
-            <PanelHeader
-              monthYearSeparator={this.calendarHeaderMonthYearSeparator}
-              monthBeforeYear={this.calendarMonthBeforeYear}
-              value={this.endCalendarDateTime}
-              onUpdateValue={this.onUpdateEndCalendarValue}
-              mergedClsPrefix={mergedClsPrefix}
-              calendarMonth={this.endCalendarMonth}
-              calendarYear={this.endCalendarYear}
-            />
-            <div
-              class={`${mergedClsPrefix}-date-panel-month__next`}
-              onClick={this.endCalendarNextMonth}
-            >
-              {resolveSlot(datePickerSlots['next-month'], () => [
-                <ForwardIcon />
-              ])}
-            </div>
-            <div
-              class={`${mergedClsPrefix}-date-panel-month__fast-next`}
-              onClick={this.endCalendarNextYear}
-            >
-              {resolveSlot(datePickerSlots['next-year'], () => [
-                <FastForwardIcon />
-              ])}
-            </div>
-          </div>
-          <div class={`${mergedClsPrefix}-date-panel-weekdays`}>
-            {this.weekdays.map(weekday => (
-              <div
-                key={weekday}
-                class={`${mergedClsPrefix}-date-panel-weekdays__day`}
-              >
-                {weekday}
-              </div>
-            ))}
-          </div>
-          <div class={`${mergedClsPrefix}-date-panel__divider`} />
-          <div class={`${mergedClsPrefix}-date-panel-dates`}>
-            {this.endDateArray.map((dateItem, i) => (
               <div
                 data-n-date
                 key={i}

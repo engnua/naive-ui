@@ -131,7 +131,7 @@ export function dualCalendarValidation(
     if (
       value === null
       || !Array.isArray(value)
-      || !['daterange', 'datetimerange'].includes(type)
+      || !['daterange', 'datetimerange', 'daterange-minimal'].includes(type)
       || !isDateDisabled
     ) {
       return false
@@ -144,7 +144,7 @@ export function dualCalendarValidation(
     if (
       value === null
       || !Array.isArray(value)
-      || !['daterange', 'datetimerange'].includes(type)
+      || !['daterange', 'datetimerange', 'daterange-minimal'].includes(type)
       || !isDateDisabled
     ) {
       return false
